@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+  flex-direction: column;
+}
+
+.Map {
+  display: flex;
+}
+
+.Bottom-Data {
+  display: flex;
+  flex-direction: row;
+}
