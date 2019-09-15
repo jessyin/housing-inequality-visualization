@@ -9,11 +9,20 @@ class LineChart extends React.Component {
     const housingMax = Math.max(...this.props.housingData.map((d) => d.y));
     const homelessnessMax = Math.max(...this.props.homelessnessData.map((d) => d.y));
 
-    function find_point(x, data) {
+    function find_housing_point(x, data) {
       for (var i = 0; i < data.length; i++) {
         if (data[i].x == x)
-          return data[i].y
+          return "$" + data[i].y / 1000 + "K"
       }
+      return "N/A"
+    }
+
+    function find_homelessness_point(x, data) {
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].x == x)
+          return Math.round(data[i].y * 100 * 1000) / 1000 + "%"    // 3 decimal places
+      }
+      return "N/A"
     }
 
     console.log(housingMax)
@@ -21,6 +30,7 @@ class LineChart extends React.Component {
 
     return (
       <VictoryChart
+
         domainPadding={20}
         domain={{ y: [0, 1] }}
         offsetX={100}
@@ -36,8 +46,8 @@ class LineChart extends React.Component {
         />
         <VictoryLabel 
           text={[this.props.selectedYear, 
-                  find_point(Number(this.props.selectedYear), this.props.housingData),
-                  find_point(Number(this.props.selectedYear), this.props.homelessnessData)
+                  find_housing_point(Number(this.props.selectedYear), this.props.housingData),
+                  find_homelessness_point(Number(this.props.selectedYear), this.props.homelessnessData)
                 ]}
           x={225} 
           y={220} 
@@ -77,7 +87,7 @@ class LineChart extends React.Component {
 
         {/* Right axis: Homelessness data */}
         <VictoryLabel 
-          text={["Overall", "Homelessness", "(Persons)"]}
+          text={["Percentage", "Homelessness"]}
           x={380} 
           y={30} 
           textAnchor="right"
@@ -95,7 +105,7 @@ class LineChart extends React.Component {
           // Use normalized tickValues (0 - 1)
           tickValues={[0.25, 0.5, 0.75, 1]}
           // Re-scale ticks by multiplying by correct maxima
-          tickFormat={(t) => Math.round(t * homelessnessMax / 100) * 100}
+          tickFormat={(t) => Math.round(t * homelessnessMax * 100 * 100) / 100 + "%"}
         />
         <VictoryLine
           data={this.props.homelessnessData}
