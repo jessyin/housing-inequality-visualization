@@ -3,6 +3,7 @@ import LineChart from './components/LineChart';
 import Map from './components/Map';
 import './App.css';
 import housingData from './static/housing_data.json'
+import homelessnessData from './static/homelessness_data.json'
 
 class Main extends React.Component {
   constructor() {
@@ -25,7 +26,9 @@ class Main extends React.Component {
           <Map handleSelectState={this.handleSelectState} selectedState={this.state.selectedState} />
         </div>
         <div className="Right-Data">
-          <LineChart data={housingData[this.state.selectedState]} />
+            <LineChart 
+              housingData={housingData[this.state.selectedState]}
+              homelessnessData={homelessnessData[this.state.selectedState]}/>
         </div>
       </div>
     )
