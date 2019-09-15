@@ -11,15 +11,18 @@ import stateAbbreviations from '../static/state_abbreviations.json'
 
 const _ = require('lodash');
 
+const MAX_PRICE = 635000
+const MIN_PRICE = 100000
+
 const mapStyles = {
   hover: {
-    fill: Colors.darkgray,
+    fill: Colors.lightlightgray,
     stroke: Colors.darkgray,
     strokeWidth: 0.1,
     outline: "none",
   },
   pressed: {
-    fill: Colors.orange,
+    fill: Colors.darkgray,
     stroke: Colors.darkgray,
     strokeWidth: 0.1,
     outline: "none",
@@ -31,9 +34,9 @@ const mapStyles = {
     outline: "none",
   },
   selected: {
-    fill: Colors.orange,
+    fill: Colors.darkgray,
     stroke: Colors.darkgray,
-    strokeWidth: 0.5,
+    strokeWidth: 2,
     outline: "none",
   }
 }
@@ -44,6 +47,24 @@ class Map extends Component {
     this.state = {
       zoom: 1,
     }
+  }
+
+  calculateColor = (geography) => {
+    const stateAbbreviation = this.abbreviateName(geography.properties.name)
+    if (this.props.housingData[stateAbbreviation] === undefined) {
+      return null
+    }
+
+    const currentPrice = this.props.housingData[stateAbbreviation].find(obj => {
+      return obj.x === this.props.selectedYear
+    })
+
+    if (currentPrice === undefined) {
+      return null
+    }
+
+    console.log(currentPrice, this.props.selectedYear)
+    return Math.floor((currentPrice['y'] - MIN_PRICE)/MAX_PRICE * Colors.spectrumDefault.length)
   }
 
   abbreviateName(stateName) {
@@ -60,24 +81,30 @@ class Map extends Component {
   }
 
   render() {
+    console.log('refresh')
     return (
       <ComposableMap
         projectionConfig={{ scale: 1000 }}
       >
         <ZoomableGroup center={[-95,36]} disablePanning>
           <Geographies geography={`${process.env.PUBLIC_URL}/states-albers-10m.json`} disableOptimization>
-            {(geographies, projection) => geographies.map(geography =>
-              (<Geography
-                key={ geography.id }
-                geography={ geography }
-                projection={ projection }
-                onClick={this.handleSelectState}
-                style={{
-                  hover: mapStyles.hover,
-                  pressed: mapStyles.pressed,
-                  default: this.isStateSelected(geography) ? mapStyles.selected : mapStyles.default
-                }}
-              />)
+            {(geographies, projection) => geographies.map(geography => {
+              let colorIndex = this.calculateColor(geography)
+              return (
+                <Geography
+                  key={ geography.id }
+                  geography={ geography }
+                  projection={ projection }
+                  onClick={this.handleSelectState}
+                  style={{
+                    hover: Object.assign({}, mapStyles.hover, colorIndex ? { fill: Colors.spectrumLight[colorIndex] } : null),
+                    pressed: mapStyles.pressed,
+                    default: this.isStateSelected(geography) 
+                      ? Object.assign({}, mapStyles.selected, colorIndex ? { fill: Colors.spectrumDark[colorIndex] } : null) 
+                      : Object.assign({}, mapStyles.default, colorIndex ? { fill: Colors.spectrumDefault[colorIndex]} : null)
+                  }}
+                />)
+            }
             )}
           </Geographies>
         </ZoomableGroup>
