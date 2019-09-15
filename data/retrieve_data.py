@@ -12,17 +12,21 @@ def parse_homelessness_data(filename):
 	# Homelessness data from HUD Exchange
 	print('Retrieving homelessness data...')
 
-	filename, _ = urllib.request.urlretrieve('https://www.hudexchange.info/resources/documents/2007-2018-PIT-Counts-by-State.xlsx')
-	book = xlrd.open_workbook(filename)
+	tempfile, _ = urllib.request.urlretrieve('https://www.hudexchange.info/resources/documents/2007-2018-PIT-Counts-by-State.xlsx')
+	book = xlrd.open_workbook(tempfile)
 
 	obj = {}
 	for year in range(2010, 2019):
 		sheet = book.sheet_by_name(str(year))
 		
 		iterrows = sheet.get_rows()
-		next(iterrows) 		# skip header row
 		for row in iterrows:
 			state = row[0].value
+
+			if state not in state_abbrs.values():
+				# skip header and footer rows
+				continue
+			
 			overall_homelessness = row[2].value
 
 			obj.setdefault(state, []) 	# initialize empty list for each state
@@ -41,10 +45,6 @@ def get_housing_data(filename):
 
 	obj = {}
 	for st in range(2, 53):	# states range from 2 to 52 (including DC)
-		state = code_to_state_abbr[st]
-		if state == 'District of Columbia':
-			continue
-
 		data = quandl.get("ZILLOW/S" + str(st) + "_MLPAH", collapse="annual")
 
 		points = []
@@ -52,7 +52,7 @@ def get_housing_data(filename):
 			item = {'x': index.year, 'y': int(row['Value'])}
 			points.append(item)
 
-		obj[state] = points
+		obj[code_to_state_abbr[st]] = points
 
 	with open(filename, 'w') as f:
 		json.dump(obj, f)
