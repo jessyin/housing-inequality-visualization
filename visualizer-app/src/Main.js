@@ -2,6 +2,7 @@ import React from 'react'
 import LineChart from './components/LineChart';
 import Map from './components/Map';
 import DateSlider from './components/DateSlider';
+import PeopleNumber from './components/PeopleNumber';
 import './App.css';
 import housingData from './static/housing_data.json'
 import homelessnessData from './static/homelessness_data.json'
@@ -11,7 +12,7 @@ class Main extends React.Component {
     super()
     this.state = {
       selectedState: 'MA',
-      selectedYear: 2019
+      selectedYear: 2018
     }
   }
 
@@ -23,6 +24,14 @@ class Main extends React.Component {
   handleSelectYear = (year) => {
     console.log(year)
     this.setState({ selectedYear: year })
+  }
+
+  getHomelessCount = () => {
+    const countData = homelessnessData[this.state.selectedState].find(obj => obj.x === this.state.selectedYear)
+    if (!countData) {
+      return null
+    }
+    return countData.y
   }
 
   render() {
@@ -42,6 +51,7 @@ class Main extends React.Component {
               <LineChart 
                 housingData={housingData[this.state.selectedState]}
                 homelessnessData={homelessnessData[this.state.selectedState]}/>
+              <PeopleNumber number={this.getHomelessCount()} />
           </div>
         </div>
       </div>

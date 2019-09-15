@@ -63,7 +63,6 @@ class Map extends Component {
       return null
     }
 
-    console.log(currentPrice, this.props.selectedYear)
     return Math.floor((currentPrice['y'] - MIN_PRICE)/MAX_PRICE * Colors.spectrumDefault.length)
   }
 
