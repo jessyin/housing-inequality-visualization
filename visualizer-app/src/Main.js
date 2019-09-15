@@ -53,7 +53,7 @@ class Main extends React.Component {
                 selectedYear={this.state.selectedYear}
                 housingData={housingData[this.state.selectedState]}
                 homelessnessData={homelessnessData[this.state.selectedState]}/>
-              <PeopleNumber number={this.getHomelessCount()} />
+              <PeopleNumber number={this.getHomelessCount()} selectedState={this.state.selectedState} selectedYear={this.state.selectedYear}/>
           </div>
         </div>
       </div>

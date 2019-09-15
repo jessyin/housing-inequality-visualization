@@ -2,87 +2,24 @@ import React from 'react'
 import { FaFemale, FaMale, FaChild } from 'react-icons/fa'
 import Colors from '../Colors';
 
+const icons = [<FaFemale size={50} color={Colors.darkgray} />, <FaMale size={50} color={Colors.darkgray} />, <FaFemale size={50} color={Colors.darkgray} />, <FaMale size={50} color={Colors.darkgray} />, <FaChild size={30} color={Colors.darkgray} style={{paddingRight:10, paddingLeft:10}}/>]
+
 class PeopleNumber extends React.Component {
   renderPeople = () => {
     if (!this.props.number) {
       console.log('none')
       return null
     }
-
-    if (this.props.number < 1500) {
-      return (<div><FaMale size={50} color={Colors.darkgray}/></div>)
-    } else if (this.props.number < 5000) {
-      return (<div><FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/></div>)
-    } else if (this.props.number < 10000) {
-      return (<div>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        </div>)
-    } else if (this.props.number < 20000) {
-      return (<div>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        </div>)
-    } else if (this.props.number < 50000) {
-      return (<div>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        </div>)
-    } else if (this.props.number < 100000) {
-      return (<div>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        </div>)
-    } else {
-      return (<div>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        <FaChild size={30} color={Colors.darkgray}/>
-        <FaMale size={50} color={Colors.darkgray}/><FaFemale size={50} color={Colors.darkgray}/>
-        </div>)
-    }
+    const size = Math.min(Math.max(Math.round(this.props.number*10000-15), 1), 36)
+    console.log(size)
+    return (<div>{[...Array(size)].map(i => icons[Math.floor(Math.random() * Math.floor(icons.length))])}</div>)
   }
   render() {
     return (
       <div style={styles.container}>
         {this.renderPeople()}
-        <h1 style={styles.bignumber}>{this.props.number || "N/A"}</h1>
-        <p style={styles.text}>homeless in {this.props.selectedYear || "N/A"}</p>
+        <h1 style={styles.bignumber}>{(this.props.number*100).toFixed(2) || "N/A"}</h1>
+        <p style={styles.text}>% homeless in {this.props.selectedState || "N/A"} ({this.props.selectedYear})</p>
       </div>
     )
   }

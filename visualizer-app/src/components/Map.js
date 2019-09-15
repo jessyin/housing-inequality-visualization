@@ -17,8 +17,8 @@ const MIN_PRICE = 100000
 const mapStyles = {
   hover: {
     fill: Colors.lightlightgray,
-    stroke: Colors.darkgray,
-    strokeWidth: 0.1,
+    stroke: Colors.lightgray,
+    strokeWidth: 2,
     outline: "none",
   },
   pressed: {

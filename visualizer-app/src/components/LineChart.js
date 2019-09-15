@@ -1,5 +1,5 @@
 import React from 'react';
-import { VictoryChart, VictoryLine, VictoryAxis, VictoryLabel } from 'victory';
+import { VictoryChart, VictoryLine, VictoryAxis, VictoryLabel, VictoryContainer } from 'victory';
 
 class LineChart extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class LineChart extends React.Component {
 
     function find_housing_point(x, data) {
       for (var i = 0; i < data.length; i++) {
-        if (data[i].x == x)
+        if (data[i].x === x)
           return "$" + data[i].y / 1000 + "K"
       }
       return "N/A"
@@ -19,7 +19,7 @@ class LineChart extends React.Component {
 
     function find_homelessness_point(x, data) {
       for (var i = 0; i < data.length; i++) {
-        if (data[i].x == x)
+        if (data[i].x === x)
           return Math.round(data[i].y * 100 * 1000) / 1000 + "%"    // 3 decimal places
       }
       return "N/A"
@@ -30,7 +30,8 @@ class LineChart extends React.Component {
 
     return (
       <VictoryChart
-
+        height={270}
+        containerComponent={<VictoryContainer style={{height: 'auto'}}/>}
         domainPadding={20}
         domain={{ y: [0, 1] }}
         offsetX={100}
@@ -50,7 +51,7 @@ class LineChart extends React.Component {
                   find_homelessness_point(Number(this.props.selectedYear), this.props.homelessnessData)
                 ]}
           x={225} 
-          y={220} 
+          y={190} 
           textAnchor="middle"
           style={[{fill: "blue"}, {fill: "black"}, {fill: "red"}]}
         />

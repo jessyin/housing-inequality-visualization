@@ -1,13 +1,11 @@
 .App {
   text-align: center;
   height: 100%;
-
 }
 
 .Map {
   display: flex;
   flex: 1.5;
-  overflow: hidden;
   height: 100%;
   align-items: center;
 }
