@@ -1,5 +1,6 @@
 import React from 'react';
 import { VictoryChart, VictoryLine, VictoryAxis, VictoryLabel, VictoryContainer } from 'victory';
+import Colors from '../Colors';
 
 class LineChart extends React.Component {
   render() {
@@ -40,7 +41,7 @@ class LineChart extends React.Component {
         <VictoryLabel text="Housing Prices vs. Homelessness" x={225} y={30} textAnchor="middle"/>
         <VictoryLine
           style={{
-            data: {stroke: "blue", strokeDasharray: "5,5", strokeWidth: 1},
+            data: {stroke: Colors.darkgray, strokeDasharray: "5,5", strokeWidth: 1},
           }}
           x={() => Number(this.props.selectedYear)}
           

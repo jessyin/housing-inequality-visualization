@@ -54,6 +54,7 @@ class Map extends Component {
     if (this.props.housingData[stateAbbreviation] === undefined) {
       return null
     }
+    console.log('geography:', geography)
 
     const currentPrice = this.props.housingData[stateAbbreviation].find(obj => {
       return obj.x === this.props.selectedYear
