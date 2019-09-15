@@ -14,6 +14,21 @@ const wrapperStyles = {
 }
 
 class Map extends Component {
+  constructor() {
+    super()
+    this.state = {
+      zoom: 1
+    }
+  }
+
+  handleZoomIn = () => {
+    this.setState({ zoom: this.state.zoom * 2 })
+  }
+
+  handleZoomOut = () => {
+    this.setState({ zoom: this.state.zoom / 2 })
+  }
+
   render() {
     return (
       <div style={wrapperStyles}>
@@ -29,7 +44,7 @@ class Map extends Component {
             height: "auto",
           }}
           >
-          <ZoomableGroup center={[0,20]} disablePanning>
+          <ZoomableGroup disablePanning>
             <Geographies geography={`${process.env.PUBLIC_URL}/states-10m.json`}>
               {(geographies, projection) => geographies.map(geography => (
                 <Geography
