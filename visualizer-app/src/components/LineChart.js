@@ -29,6 +29,8 @@ class LineChart extends React.Component {
     console.log(housingMax)
     console.log(homelessnessMax)
 
+    const darkred = Colors.spectrumDefault[Colors.spectrumDefault.length - 1];
+
     return (
       <VictoryChart
         height={270}
@@ -41,7 +43,7 @@ class LineChart extends React.Component {
         <VictoryLabel text="Housing Prices vs. Homelessness" x={225} y={30} textAnchor="middle"/>
         <VictoryLine
           style={{
-            data: {stroke: Colors.darkgray, strokeDasharray: "5,5", strokeWidth: 1},
+            data: {stroke: Colors.lightblue, strokeDasharray: "5,5", strokeWidth: 1},
           }}
           x={() => Number(this.props.selectedYear)}
           
@@ -54,10 +56,15 @@ class LineChart extends React.Component {
           x={225} 
           y={190} 
           textAnchor="middle"
-          style={[{fill: "blue"}, {fill: "black"}, {fill: "red"}]}
+          style={[{fill: Colors.lightblue}, {fill: darkred}, {fill: Colors.darkgray}]}
         />
         <VictoryAxis
           label="Year"
+          style={{
+            axis: {stroke: Colors.lightblue},
+            axisLabel: {fill: Colors.lightblue},
+            tickLabels: {fill: Colors.lightblue}
+          }}
           // to avoid thousands commas
           tickFormat={(t) => t.toString()} 
         />
@@ -68,12 +75,17 @@ class LineChart extends React.Component {
           x={0} 
           y={30} 
           textAnchor="left"
-          style={[{fontSize: 10}, {fontSize: 10}]}
+          style={[{fontSize: 10, fill: darkred}, {fontSize: 10, fill: darkred}]}
         />
         <VictoryAxis
           dependentAxis={true}
           orientation="left"
           standalone={false}
+          style={{
+            axis: {stroke: darkred},
+            axisLabel: {fill: darkred},
+            tickLabels: {fill: darkred}
+          }}
           // Use normalized tickValues (0 - 1)
           tickValues={[0.25, 0.5, 0.75, 1]}
           // Re-scale ticks by multiplying by correct maxima
@@ -85,6 +97,7 @@ class LineChart extends React.Component {
             duration: 2000,
           }}
           y={(datum) => datum.y / housingMax}
+          style={{ data: {stroke: darkred} }}
         />
 
         {/* Right axis: Homelessness data */}
@@ -93,16 +106,16 @@ class LineChart extends React.Component {
           x={380} 
           y={30} 
           textAnchor="right"
-          style={[{fontSize: 10, fill: "red"}, {fontSize: 10, fill: "red"}]}
+          style={[{fontSize: 10, fill: Colors.darkgray}, {fontSize: 10, fill: Colors.darkgray}]}
         />
         <VictoryAxis
           dependentAxis={true}
           orientation="right"
           standalone={false}
           style={{
-            axis: {stroke: "red"},
-            axisLabel: {fill: "red"},
-            tickLabels: {fill: "red"}
+            axis: {stroke: Colors.darkgray},
+            axisLabel: {fill: Colors.darkgray},
+            tickLabels: {fill: Colors.darkgray}
           }}
           // Use normalized tickValues (0 - 1)
           tickValues={[0.25, 0.5, 0.75, 1]}
@@ -115,7 +128,7 @@ class LineChart extends React.Component {
             duration: 2000,
             onLoad: { duration: 1000 }
           }}
-          style={{ data: {stroke: "red"} }}
+          style={{ data: {stroke: Colors.darkgray} }}
           y={(datum) => datum.y / homelessnessMax}
         />
       </VictoryChart>
