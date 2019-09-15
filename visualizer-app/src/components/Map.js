@@ -6,57 +6,82 @@ import {
   Geographies,
   Geography,
 } from "react-simple-maps"
+import Colors from '../Colors';
+import stateAbbreviations from '../static/state_abbreviations.json'
 
-const wrapperStyles = {
-  width: "100%",
-  maxWidth: 980,
-  margin: "0 auto",
+const _ = require('lodash');
+
+const mapStyles = {
+  hover: {
+    fill: Colors.darkgray,
+    stroke: Colors.darkgray,
+    strokeWidth: 0.1,
+    outline: "none",
+  },
+  pressed: {
+    fill: Colors.orange,
+    stroke: Colors.darkgray,
+    strokeWidth: 0.1,
+    outline: "none",
+  },
+  default: {
+    fill: Colors.lightgray,
+    stroke: Colors.darkgray,
+    strokeWidth: 0.1,
+    outline: "none",
+  },
+  selected: {
+    fill: Colors.orange,
+    stroke: Colors.darkgray,
+    strokeWidth: 0.5,
+    outline: "none",
+  }
 }
 
 class Map extends Component {
   constructor() {
     super()
     this.state = {
-      zoom: 1
+      zoom: 1,
     }
   }
 
-  handleZoomIn = () => {
-    this.setState({ zoom: this.state.zoom * 2 })
+  abbreviateName(stateName) {
+    const stateData = _.invert(stateAbbreviations);
+    return stateData[stateName]
   }
 
-  handleZoomOut = () => {
-    this.setState({ zoom: this.state.zoom / 2 })
+  handleSelectState = (geography) => {
+    this.props.handleSelectState(this.abbreviateName(geography.properties.name))
+  }
+
+  isStateSelected = (geography) => {
+    return this.props.selectedState === this.abbreviateName(geography.properties.name)
   }
 
   render() {
     return (
-      <div style={wrapperStyles}>
-        <ComposableMap
-          projectionConfig={{
-            scale: 205,
-            rotation: [-11,0,0],
-          }}
-          width={980}
-          height={551}
-          style={{
-            width: "100%",
-            height: "auto",
-          }}
-          >
-          <ZoomableGroup disablePanning>
-            <Geographies geography={`${process.env.PUBLIC_URL}/states-10m.json`}>
-              {(geographies, projection) => geographies.map(geography => (
-                <Geography
-                  key={ geography.id }
-                  geography={ geography }
-                  projection={ projection }
-                  />
-              ))}
-            </Geographies>
-          </ZoomableGroup>
-        </ComposableMap>
-      </div>
+      <ComposableMap
+        projectionConfig={{ scale: 1000 }}
+      >
+        <ZoomableGroup center={[-95,36]} disablePanning>
+          <Geographies geography={`${process.env.PUBLIC_URL}/states-albers-10m.json`} disableOptimization>
+            {(geographies, projection) => geographies.map(geography =>
+              (<Geography
+                key={ geography.id }
+                geography={ geography }
+                projection={ projection }
+                onClick={this.handleSelectState}
+                style={{
+                  hover: mapStyles.hover,
+                  pressed: mapStyles.pressed,
+                  default: this.isStateSelected(geography) ? mapStyles.selected : mapStyles.default
+                }}
+              />)
+            )}
+          </Geographies>
+        </ZoomableGroup>
+      </ComposableMap>
     )
   }
 }

@@ -1,13 +1,26 @@
 .App {
   text-align: center;
-  flex-direction: column;
+  flex-direction: row;
+  height: 100%;
+
 }
 
 .Map {
   display: flex;
+  flex: 1.5;
+  overflow: hidden;
+  height: 100%;
+  align-items: center;
 }
 
-.Bottom-Data {
+.Right-Data {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  flex: 1;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden
 }

@@ -12,14 +12,19 @@ class Main extends React.Component {
       selectedYear: '2019'
     }
   }
+
+  handleSelectState = (state) => {
+    console.log('selectstate', state)
+    this.setState({ selectedState: state })
+  }
+
   render() {
-    console.log(housingData)
     return (
-      <div>
+      <div style={{display: 'flex', height: '100%'}}>
         <div className="Map">
-          <Map />
+          <Map handleSelectState={this.handleSelectState} selectedState={this.state.selectedState} />
         </div>
-        <div className="Bottom-Data" style={{width: '50%'}}>
+        <div className="Right-Data">
           <LineChart data={housingData[this.state.selectedState]} />
         </div>
       </div>
