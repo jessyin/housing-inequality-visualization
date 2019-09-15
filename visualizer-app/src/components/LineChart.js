@@ -29,7 +29,7 @@ class LineChart extends React.Component {
     console.log(housingMax)
     console.log(homelessnessMax)
 
-    const darkred = Colors.spectrumDefault[Colors.spectrumDefault.length - 1];
+    const darkred = Colors.spectrumDefault[Math.floor(Colors.spectrumDefault.length / 2)];
 
     return (
       <VictoryChart
