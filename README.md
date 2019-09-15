@@ -1,4 +1,23 @@
-house prices and homelessness data visualization
-to run:
-1. npm install
-2. npm start
+# Housing Inequality - Data Visualization
+Our web app aims to shed light on housing inequality in the US by comparing the trend in housing prices to the trend in rate of homelessness, through an interactive and engaging user interface. 
+
+## Deployment
+To deploy the web application, run the following commands from the `visualizer-app` directory:
+```
+$ npm install
+$ npm start
+```
+
+## Data Sources
+We used the following datasets:
+* [Zillow Real Estate Research](https://www.quandl.com/data/ZILLOW-Zillow-Real-Estate-Research) via Quandl
+* [2018 AHAR - PIT Estimates of Homelessness in the U.S.](https://www.hudexchange.info/resource/5783/2018-ahar-part-1-pit-estimates-of-homelessness-in-the-us/) via HUD Exchange
+* [Population, Population Change, and Estimated Components of Population](https://www.census.gov/data/tables/time-series/demo/popest/2010s-state-total.html) via US Census Bureau
+
+### Retrieving Data
+The processed data lives in the application, but if the data is updated, you can re-retrieve the data from the `data` directory:
+```
+$ pip install -r requirements.txt
+$ python3 retrieve_data.py
+```
+This assumes the data is still in the same place (pulls from the locations mentioned above).
