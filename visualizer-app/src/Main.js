@@ -40,6 +40,7 @@ class Main extends React.Component {
           </div>
           <div className="Right-Data">
               <LineChart 
+                selectedYear={this.state.selectedYear}
                 housingData={housingData[this.state.selectedState]}
                 homelessnessData={homelessnessData[this.state.selectedState]}/>
           </div>
