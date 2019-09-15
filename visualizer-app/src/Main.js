@@ -49,6 +49,8 @@ class Main extends React.Component {
           </div>
           <div className="Right-Data">
               <LineChart 
+                height="auto"
+                selectedYear={this.state.selectedYear}
                 housingData={housingData[this.state.selectedState]}
                 homelessnessData={homelessnessData[this.state.selectedState]}/>
               <PeopleNumber number={this.getHomelessCount()} />
